@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Laravel のルーティング設定で、「/posts にアクセスしたときに PostController の index メソッドを実行する」 というルールを定義
+Route::get('posts', [PostController::class, 'index']);
