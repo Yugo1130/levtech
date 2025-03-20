@@ -22,6 +22,6 @@ class PostController extends Controller
         // with以降をつけることで、posts.indexのデータを表示するときに、Viewにデータ（posts）を一緒に渡すことができる。
         // 変数名 => 値
         // return view('posts.index')->with(['posts' => $post->getByLimit()]);
-        return view('posts.index')->with(['posts' => $post->getPaginateByLimit()]);
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
     }
 }
