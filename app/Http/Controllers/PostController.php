@@ -4,7 +4,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+// 汎用的なRequestクラスからカスタマイズしたPostRequestクラスに変更
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -25,6 +27,10 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
     }
 
+    public function create()
+    {
+        return view('posts.create');
+    }
     
     // 特定IDのpostを表示する
     // @params Object Post // 引数の$postはid=1のPostインスタンス
@@ -34,5 +40,22 @@ class PostController extends Controller
         //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
         // すべてのデータを取得するわけではないので->get()は不要。
         return view('posts.show')->with(['post' => $post]);
+    }
+
+    public function store(PostRequest $request, Post $post)
+    {
+        // name="post[title]", name="post[body]"のように配列の場合は以下のように記述
+        // $inputは[ 'title' => 'タイトル', 'body' => '本文' ]のような配列型式になる。
+        $input = $request['post'];
+        // Postインスタンスのプロパティを受け取ったキーで上書き
+        // saveを行うことで、MySQLへのINSERT分が実行される
+        // 以下の3行を1行で行う
+        // $post->title = $input["title"];
+        // $post->body = $input["body"];
+        // $post->save();
+        // ただし、この書き方をするのであれば、Postクラスに$fillableを定義する必要がある。
+        $post->fill($input)->save();
+        // 保存処理が終わると、保存したpostのIDを含んだURLにリダイレクトされる。
+        return redirect('/posts/' . $post->id);
     }
 }

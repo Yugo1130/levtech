@@ -8,6 +8,7 @@
     </head>
     <body>
         <h1>Blog Name</h1>
+        <a href='/posts/create'>create</a>
         <div class='posts'>
             <!-- $post->get()のデータ（データベースのpostsテーブル内の全レコード）をforループで全件処理 -->
             @foreach ($posts as $post)
