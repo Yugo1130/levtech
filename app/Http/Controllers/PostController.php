@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(post $post) //インポートしたPostをインスタンス化して$postとして使用。
+    public function index(Post $post) //インポートしたPostをインスタンス化して$postとして使用。
     {
         //sqlの確認用
         // $test = $post->orderBy('updated_at', 'DESC')->limit(2)->toSql(); //確認用に追加
@@ -23,5 +23,16 @@ class PostController extends Controller
         // 変数名 => 値
         // return view('posts.index')->with(['posts' => $post->getByLimit()]);
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
+    }
+
+    
+    // 特定IDのpostを表示する
+    // @params Object Post // 引数の$postはid=1のPostインスタンス
+    // @return Reposnse post view
+    public function show(Post $post)
+    {
+        //'post'はbladeファイルで使う変数。中身は$postはid=1のPostインスタンス。
+        // すべてのデータを取得するわけではないので->get()は不要。
+        return view('posts.show')->with(['post' => $post]);
     }
 }

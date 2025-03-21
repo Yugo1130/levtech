@@ -28,3 +28,7 @@ Route::get('/', [PostController::class, 'index']);
 
 //Laravel のルーティング設定で、「/posts にアクセスしたときに PostController の index メソッドを実行する」 というルールを定義
 Route::get('posts', [PostController::class, 'index']);
+
+// '/posts/{対象データのID}'にGetリクエストが来たら、PostControllerのshowメソッドを実行する
+// {post}はルートパラメーター
+Route::get('/posts/{post}', [PostController::class ,'show']);
