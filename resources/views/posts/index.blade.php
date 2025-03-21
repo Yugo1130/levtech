@@ -14,6 +14,7 @@
                 <div class='post'>
                     <!-- h2 class='title'>Title</h2> -->
                     <!-- <h2 class='title'>{{ $post->title }}</h2> -->
+                    <!-- 指定したアドレスへのリンク -->
                     <h2 class='title'>
                         <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
                     </h2>

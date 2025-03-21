@@ -18,6 +18,7 @@
             </div>
         </div>
         <div class="footer">
+            <!-- トップページへ戻る -->
             <a href="/">戻る</a>
         </div>
     </body>
