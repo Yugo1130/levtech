@@ -17,7 +17,7 @@ class Post extends Model
 
     public function getPaginateByLimit(int $limit_count = 10)
     {
-        // updated_atで降順に並べたあと、limitで件数制限をかける
+        //paginateは内部でget()と同じ動作をしているためget()は不要。
         return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
 }
