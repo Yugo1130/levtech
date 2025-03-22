@@ -45,3 +45,6 @@ Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 
 // ブログ編集実行
 Route::put('/posts/{post}', [PostController::class, 'update']);
+
+// ブログ削除
+Route::delete('/posts/{post}', [PostController::class,'delete']);
