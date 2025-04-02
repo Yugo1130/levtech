@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 // use Illuminate\Http\Request;
 // 汎用的なRequestクラスからカスタマイズしたPostRequestクラスに変更
 use App\Http\Requests\PostRequest;
@@ -27,9 +28,10 @@ class PostController extends Controller
         return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
     }
 
-    public function create()
+    public function create(Category $category)
     {
-        return view('posts.create');
+        // カテゴリの全てのデータをcreate.blade.phpに渡す
+        return view('posts.create')->with(['categories' => $category->get()]);
     }
     
     // 特定IDのpostを表示する
