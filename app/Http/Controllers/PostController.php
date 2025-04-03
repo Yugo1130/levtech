@@ -25,7 +25,32 @@ class PostController extends Controller
         // with以降をつけることで、posts.indexのデータを表示するときに、Viewにデータ（posts）を一緒に渡すことができる。
         // 変数名 => 値
         // return view('posts.index')->with(['posts' => $post->getByLimit()]);
-        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
+        // return view('posts.index')->with(['posts' => $post->getPaginateByLimit(5)]);
+
+        // クライアントインスタンス生成
+        $client = new \GuzzleHttp\Client(
+            ['verify' => config('app.env') !== 'local'],
+        );
+
+        // GET通信するURL
+        $url = 'https://teratail.com/api/v1/questions';
+
+        // リクエスト送信と返却データの取得
+        // Bearerトークンにアクセストークンを指定して認証を行う
+        $response = $client->request(
+            'GET',
+            $url,
+            ['Bearer' => config('services.teratail.token')] //登録したキーを呼び出し
+        );
+        
+        // API通信で取得したデータはjson形式なので、PHPファイルに対応した連想配列にデコードする
+        $questions = json_decode($response->getBody(), true);
+        
+        // index bladeに取得したデータを渡す
+        return view('posts.index')->with([
+            'posts' => $post->getPaginateByLimit(),
+            'questions' => $questions['questions'],
+        ]);
     }
 
     public function create(Category $category)
